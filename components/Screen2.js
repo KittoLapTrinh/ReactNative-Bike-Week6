@@ -1,126 +1,131 @@
-import {View,ScrollView, Image, Text, StyleSheet,TextInput, TouchableOpacity,} from 'react-native'
+import {View,ScrollView,Button, Image, Text, StyleSheet,TextInput, TouchableOpacity,} from 'react-native'
 import { FlatList } from 'react-native-web';
+import { useState } from "react";
+
+const data =[
+    {
+        imgTim: require('../assets/tim.png'),
+        imgXe: require('../assets/xexanh.png'),
+        name: 'Pinarello',
+        price: '1800',
+        type: 'mountain',
+    
+    },
+    {
+        imgTim: require('../assets/tim.png'),
+        imgXe: require('../assets/xedo.png'),
+        name: 'Pina Mountai',
+        price: '1700',
+        type: 'mountain',
+    
+    },
+    {
+        imgTim: require('../assets/tim.png'),
+        imgXe: require('../assets/xetim.png'),
+        name: 'Pina Bike',
+        price: '1500',
+        type: 'roadbike',
+    
+    },
+    {
+        imgTim: require('../assets/tim.png'),
+        imgXe: require('../assets/xedodo.png'),
+        name: 'Pinarello',
+        price: '1900',
+        type: 'roadbike',
+    
+    },
+    {
+        imgTim: require('../assets/tim.png'),
+        imgXe: require('../assets/xetimtim.png'),
+        name: 'Pinarello',
+        price: '2700',
+        type: 'roadbike',
+    
+    },
+    {
+        imgTim: require('../assets/tim.png'),
+        imgXe: require('../assets/xedo.png'),
+        name: 'Pinarello',
+        price: '1350',
+        type: 'mountain',
+    
+    },
+  
+]
+const Item = ({name, imgXe, price, navigation}) => (
+    <TouchableOpacity style={styles.productWrapper} onPress={() => {
+   
+        navigation.navigate('ProductDetail', {imgXe: imgXe, name: name, price: price})
+        }}>
+        <Image style={styles.imgXe} source={imgXe} />
+        <Text style={styles.name}>{name}</Text>
+        <Text style={styles.price}>{price}</Text>
+    </TouchableOpacity>
+)
 
 
 function Screen2({navigation}){
-    
-    const DATA=
-        [
-            {
-                img: require('../assets/cap1.png'),
-                name: 'Cáp chuyển từ Cổng USB sang PS2...',
-                price: '69.900 đ',
-                discount: '-39%',
-                rating: 15
-            }, 
-            {
-                img: require('../assets/cap2.png'),
-                name: 'Cáp chuyển từ Cổng USB sang PS2...',
-                price: '69.900 đ',
-                discount: '-39%',
-                rating: 15
-            },
-            {
-                img: require('../assets/cap3.png'),
-                name: 'Cáp chuyển từ Cổng USB sang PS2...',
-                price: '69.900 đ',
-                discount: '-39%',
-                rating: 15
-            },
-            {
-                img: require('../assets/cap4.png'),
-                name: 'Cáp chuyển từ Cổng  USB sang PS2...',
-                price: '69.900 đ',
-                discount: '-39%',
-                rating: 15
-            },
-            {
-                img: require('../assets/cap5.png'),
-                name: 'Cáp chuyển từ Cổng USB sang PS2...',
-                price: '69.900 đ',
-                discount: '-39%',
-                rating: 15
-            },
-            {
-                img: require('../assets/cap6.png'),
-                name: 'Cáp chuyển từ Cổng USB sang PS2...',
-                price: '69.900 đ',
-                discount: '-39%',
-                rating: 15
-            }
-        
-    ]
+    const [flag, setFlag] = useState(0)
+    const [prdt, setPrdt] = useState([])
 
+    
     return(
         <View style={styles.container}>
             <View style = {styles.top}>
-                <TouchableOpacity>
-                    <Image style={{width: 30, height: 30}} source={require('../assets/back.png')}></Image>
-                </TouchableOpacity>
-                <TouchableOpacity style={{flexDirection: 'row', backgroundColor: '#FFFFFF'}}>
-                <Image style={{width: 30, height: 30}} source={require('../assets/look.png')}></Image>
-                    <TextInput placeholder='Dây cáp usb' style={{color: '#8b6d6d'}}></TextInput>
-                    
-                </TouchableOpacity>
+                <View style={{flexDirection: 'row'}}>
+                    <Text style={{fontSize: 25, fontWeight: 'bold', color: '#ea4b4b', flex: 1, padding: 20}}>The world’s Best Bike</Text>
+                    <TouchableOpacity onPress={()=>{navigation.navigate('Screen1')}}>
+                        <Image style={{width: '30px', height: '30px', marginTop: 25, marginRight: 30, borderWidth: 1, borderColor: 'black'}} source={require('../assets/back.png')}></Image>
+                    </TouchableOpacity>
+                   
+                </View>
                 
-                <TouchableOpacity style={{flexDirection: 'row'}}>
-                    <Image style={{width: 30, height: 30, }} source={require('../assets/muasam.png')}></Image>
-                    <Image style={{width: 15, height: 15, }} source={require('../assets/circleRed.png')}></Image>
-                </TouchableOpacity>
-                <TouchableOpacity>
-                    <Image style={{width: 30, height: 30, }} source={require('../assets/bacham.png')}></Image>
-                </TouchableOpacity>
+                <View style={{flex: 1,flexDirection: 'row', backgroundColor: '#FFFFFF', alignItems: 'center', justifyContent: 'space-around'}}>
+                    <TouchableOpacity onPress={()=>{setFlag(0)}}>
+                        <Text style={{color:`${flag==0 ? 'red' : '#ccc'}`}}>All</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={()=>{setFlag(1) 
+                        setPrdt(data.filter((data)=>data.type === 'roadbike'))}}>
+                        <Text style={{color: `${flag == 1 ? 'red' : '#ccc'}`}}>Roadbike</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={()=>{setFlag(2)
+                    setPrdt(data.filter((data) => data.type === 'mountain'))
+                    }}>
+                    <Text style={{color: `${flag == 2 ? 'red' : '#ccc'}`}}>Mountain</Text>
+                    </TouchableOpacity>
+                    
+                  
+                </View>
+                
+                
             </View>
-            <ScrollView>
-
-                <FlatList data = {DATA} numColumns={2}  renderItem={({item})=>{
+            <ScrollView style={{flex: 4, }} >
+                <FlatList data={flag == 0 ? data : prdt} keyExtractor={item => item.price} numColumns={2} renderItem={({item})=>{
                     return(
-                       <View style={{backgroundColor: '#FFFFFF',borderWidth: 1, borderColor: '#C4C4C4', marginHorizontal: '5px', marginVertical: '20px' , }}>
-                            <TouchableOpacity>
-                                <View style={{alignItems: 'center', marginVertical: '5px',flexDirection: 'row', justifyContent:'center'}}>
-                                    <Image source={item.img} style={{width: '60px', height: '60px', borderWidth: 1, borderColor: 'red'}}></Image>                                    
-                                </View>
+                        <View style={{backgroundColor: '#FFFFFF' , marginHorizontal: 20 }}>
+                            <TouchableOpacity style={{flexDirection: 'row'}} onPress={()=>{navigation.navigate('Screen3')}}>
+                                <Image source={item.imgTim} style={{width: '15px', height: '15px', }}></Image>
+                                <Image source={item.imgXe} style={{width: '140px', height: '140px',}}></Image>
+                                
                             </TouchableOpacity>
-                            <Text style={{fontSize: 12}}>{item.name}</Text>
-                            <View style={{flexDirection: 'row', justifyContent: "center", alignItems: 'center', }}>
-                                <Image style={{width: '13px', height: '13px'}} source={require('../assets/ngoisao.jpg')}></Image>
-                                <Image style={{width: '13px', height: '13px'}} source={require('../assets/ngoisao.jpg')}></Image>
-                                <Image style={{width: '13px', height: '13px'}} source={require('../assets/ngoisao.jpg')}></Image>
-                                <Image style={{width: '13px', height: '13px'}} source={require('../assets/ngoisao.jpg')}></Image>
-                                <Image style={{width: '13px', height: '13px'}} source={require('../assets/ngoisaorong.png')}></Image>
-                                
-                                <TouchableOpacity>
-                                    <Text>({item.rating})</Text>
-                                </TouchableOpacity>
-                                
+                            <View style={{alignItems: 'center', justifyContent: 'center'}}>
+                                <Text style={{color:'#8d8782',fontSize: 16,fontWeight: 'bold'}}>{item.name}</Text>
+                                <Text style={{fontSize: 16, fontWeight: 'bold'}}>$({item.price})</Text>
                             </View>
-                             <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'center'}}>
-                                <Text style={{fontWeight:'bold'}}>{item.price}  </Text>
-                                <Text style={{}}>{item.discount}</Text>
-                            </View>
-                       
-                       </View>
-                       
-                       
+                           
+                            
+                        </View>
                     )
                 }}>
 
                 </FlatList>
                 
+                
             </ScrollView>
 
 
-            <View style = {styles.bottom}>
-                <TouchableOpacity onPress={()=>{navigation.navigate('Screen1')}}>
-                    <Image style={{width: 30, height: 30, paddingVertical: '15px'}} source={require('../assets/menu.png')}></Image>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={()=>{navigation.navigate('Screen1')}}>
-                    <Image style={{width: 30, height: 30, paddingVertical: '15px'}} source={require('../assets/home.png')}></Image>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={()=>{navigation.navigate('Screen1')}}>
-                    <Image style={{width: 30, height: 30, paddingVertical: '15px'}} source={require('../assets/back.png')}></Image>
-                </TouchableOpacity>
-            </View>
+            
         </View>
     )
   
@@ -128,29 +133,14 @@ function Screen2({navigation}){
  export default Screen2;
 const styles = StyleSheet.create({
     container:{
-        flex: 1
+        flex: 1,
+        backgroundColor: '#FFFFFF'
     },
     top:{
-        flex: 1.5,
-        flexDirection: 'row',
-        justifyContent: 'space-around',
-        alignItems: 'center',
-        backgroundColor: '#1BA9FF',
-        borderWidth: 1,
-        borderColor: 'black'
-    },
-    center:{
-        
-    },
-    bottom:{
-        flex: 1.5,
-        flexDirection: 'row',
-        justifyContent: 'space-around',
-        alignItems: 'center',
-        backgroundColor: '#1BA9FF',
-        borderWidth: 1,
-        borderColor: 'black'
-    },
+        flex:1,
+    }
+
+    
 })
 
 
